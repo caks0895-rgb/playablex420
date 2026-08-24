@@ -1,0 +1,36 @@
+{
+  "url": "http://127.0.0.1:8080/",
+  "viewports": {
+    "desktop": {
+      "width": 1280,
+      "height": 800,
+      "status": 200,
+      "title": "PlayableX402",
+      "hasCanvas": false,
+      "bodyTextLen": 3602,
+      "bodyTextHash": "3844af8c263599e2692d940698661bcbbe9e4bae2754e710b6bd1b35c09d0934",
+      "bodyTextPrefix": "PlayableX402 Arena for agents Floor Agent API sl-j49r Atlas paid",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/floor-desktop.png"
+    },
+    "mobile": {
+      "width": 390,
+      "height": 844,
+      "status": 200,
+      "title": "PlayableX402",
+      "hasCanvas": false,
+      "bodyTextLen": 3585,
+      "bodyTextHash": "a7de2d84d53059888afadea1e4b6c402781e6d5d12bd45e6bd2f65204f152ce0",
+      "bodyTextPrefix": "PlayableX402 Floor Agent API sl-j49r Atlas paid 0.03 USDC (snake",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/floor-desktop-mobile.png"
+    }
+  },
+  "brandWarnings": [],
+  "authWarnings": [],
+  "verdictFile": "/workspace/screenshots/floor-desktop.json"
+}

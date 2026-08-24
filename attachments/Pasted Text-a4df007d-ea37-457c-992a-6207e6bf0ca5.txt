@@ -1,0 +1,65 @@
+Build a simple multiplayer Agent Game Platform called "PlayableX402".
+
+### Core Concept
+This is a collection of simple multiplayer games designed specifically for AI agents. 
+Humans can watch the games through live text logs. 
+All games use the same multiplayer system and x402 payment protocol for entry fees and prize distribution.
+
+### Key Requirements
+- All games are multiplayer only (for now)
+- Games must be simple, fast, and easy to understand
+- Use a shared multiplayer engine/system for all games (lobby, matchmaking, turn handling, logging)
+- Support x402 for:
+  - Entry fee when joining a game
+  - Optional small payments for power-ups
+  - Automatic prize pool distribution to winners
+- Every important action must generate a clear human-readable text log (example: "Agent Nova rolled 4 and landed on a snake, falling to position 12")
+- Agents interact via simple HTTP API (join, get state, submit action)
+- Keep the architecture simple and easy to extend later
+
+### Games to include (in this order of priority):
+
+1. **Snakes and Ladders (Semi-Strategic)**
+   - 2–6 players
+   - Classic snakes and ladders rules
+   - Add simple strategic choices (example: pay small fee to re-roll once, or avoid one snake)
+   - Fast games (target 5–12 minutes)
+
+2. **Debate 1v1**
+   - Exactly 2 players
+   - Structured debate (Opening → Rebuttal → Final Argument)
+   - Simple scoring system (AI judge + optional voting later)
+   - Duration around 8–15 minutes
+
+3. **Coin Pump Prediction**
+   - 2–8 players
+   - Server provides 5 coins
+   - Each agent chooses 1 coin they think will have the highest price increase in the next 10 minutes
+   - After 10 minutes, calculate the real price change and determine the winner(s)
+   - Prize pool shared among correct predictors
+
+4. **Rock-Paper-Scissors++**
+   - 2–4 players
+   - Enhanced version with scoring and light strategy/bluffing elements
+   - Very fast rounds (3–7 minutes total)
+
+### Technical Preferences
+- Use Next.js (App Router)
+- Simple and clean code structure
+- In-memory or simple database for game state (easy to upgrade later)
+- Clear separation between:
+  - Shared multiplayer system
+  - Individual game logic
+  - x402 payment handling
+  - Logging system
+- Make it easy to add new simple games in the future
+
+### Output Expectations
+- Clean project structure
+- Working lobby + matchmaking system
+- At least 1–2 games fully playable
+- Clear API documentation for agents
+- Example of text logs
+- Basic frontend for watching live games (text-based is enough)
+
+Please start by creating the overall architecture and the shared multiplayer system first, then implement the games one by one starting from Snakes and Ladders.

@@ -1,0 +1,36 @@
+{
+  "url": "http://127.0.0.1:8080/",
+  "viewports": {
+    "desktop": {
+      "width": 1280,
+      "height": 800,
+      "status": 200,
+      "title": "PlayableX402",
+      "hasCanvas": false,
+      "bodyTextLen": 3253,
+      "bodyTextHash": "d7dd33143a7f9ffa919adb1a93afea442f7629833813685bb8f1c6b617d6a82a",
+      "bodyTextPrefix": "PlayableX402 Arena for agents Floor Skill Agent API sl-ceu9 Atla",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/app-builder-preview.png"
+    },
+    "mobile": {
+      "width": 390,
+      "height": 844,
+      "status": 200,
+      "title": "PlayableX402",
+      "hasCanvas": false,
+      "bodyTextLen": 3213,
+      "bodyTextHash": "331091d920568677db077dbaea2f12671055d9e03f6d9ce20cbe4929606393ae",
+      "bodyTextPrefix": "PlayableX402 Floor Skill Agent API sl-ceu9 Mira paid 0.03 USDC (",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/app-builder-preview-mobile.png"
+    }
+  },
+  "brandWarnings": [],
+  "authWarnings": [],
+  "verdictFile": "/workspace/screenshots/app-builder-preview.json"
+}

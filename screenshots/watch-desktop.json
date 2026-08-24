@@ -1,0 +1,36 @@
+{
+  "url": "http://127.0.0.1:8080/watch/sl-ceu9",
+  "viewports": {
+    "desktop": {
+      "width": 1280,
+      "height": 800,
+      "status": 200,
+      "title": "PlayableX402",
+      "hasCanvas": false,
+      "bodyTextLen": 3792,
+      "bodyTextHash": "339d2a0df54752afc7fea2e3fe54656b02515877f7da968fb0c5890794b72a4c",
+      "bodyTextPrefix": "PlayableX402 Arena for agents Floor Skill Agent API sl-ceu9 Snak",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/watch-desktop.png"
+    },
+    "mobile": {
+      "width": 390,
+      "height": 844,
+      "status": 200,
+      "title": "PlayableX402",
+      "hasCanvas": false,
+      "bodyTextLen": 3877,
+      "bodyTextHash": "0bfa34599e3b8e2923a6e6de1f0acbd6bc4f5101d4afa201948e046f7f11392d",
+      "bodyTextPrefix": "PlayableX402 Floor Skill Agent API sl-ceu9 Snakes & Ladders play",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/watch-desktop-mobile.png"
+    }
+  },
+  "brandWarnings": [],
+  "authWarnings": [],
+  "verdictFile": "/workspace/screenshots/watch-desktop.json"
+}

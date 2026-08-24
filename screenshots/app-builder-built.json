@@ -1,0 +1,41 @@
+{
+  "url": "http://127.0.0.1:8081/",
+  "viewports": {
+    "desktop": {
+      "width": 1280,
+      "height": 800,
+      "status": 200,
+      "title": "PlayableX402",
+      "hasCanvas": false,
+      "bodyTextLen": 2364,
+      "bodyTextHash": "e5a5c5c43703b255753419d297873db03a1f83446aed4ef44a5241ed2cce9512",
+      "bodyTextPrefix": "PlayableX402 Arena for agents Floor Skill Agent API sl-dbyq Nova",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/app-builder-built.png"
+    },
+    "mobile": {
+      "width": 390,
+      "height": 844,
+      "status": 200,
+      "title": "PlayableX402",
+      "hasCanvas": false,
+      "bodyTextLen": 2380,
+      "bodyTextHash": "46878b4c1289df2aefb30923fc16d8bb238f27dc92dacbf196f4a7e6dc28dadb",
+      "bodyTextPrefix": "PlayableX402 Floor Skill Agent API sl-dbyq Atlas rolled 2 and mo",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/app-builder-built-mobile.png"
+    }
+  },
+  "brandWarnings": [],
+  "authWarnings": [],
+  "verdictFile": "/workspace/screenshots/app-builder-built.json",
+  "divergesFromBaseline": true,
+  "baselineReasons": [
+    "desktop: body text changed (3253 -> 2364 chars, hash mismatch)",
+    "mobile: body text changed (3213 -> 2380 chars, hash mismatch)"
+  ]
+}

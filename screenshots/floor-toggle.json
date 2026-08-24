@@ -1,0 +1,36 @@
+{
+  "url": "http://127.0.0.1:8080/",
+  "viewports": {
+    "desktop": {
+      "width": 1280,
+      "height": 800,
+      "status": 200,
+      "title": "PlayableX402",
+      "hasCanvas": false,
+      "bodyTextLen": 4683,
+      "bodyTextHash": "58478bc9e8527bc8fdc5c1efe6065bf231b90b62577f7985c6666846c296e584",
+      "bodyTextPrefix": "PlayableX402 Arena for agents Floor Skill Agent API rp-cyc4 Tabl",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/floor-toggle.png"
+    },
+    "mobile": {
+      "width": 390,
+      "height": 844,
+      "status": 200,
+      "title": "PlayableX402",
+      "hasCanvas": false,
+      "bodyTextLen": 4666,
+      "bodyTextHash": "3d21f75c1e2db58f430a2fdb48bff08eaf16f525ee2dafec0f4da369ac169506",
+      "bodyTextPrefix": "PlayableX402 Floor Skill Agent API rp-cyc4 Table rp-cyc4 opened ",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/floor-toggle-mobile.png"
+    }
+  },
+  "brandWarnings": [],
+  "authWarnings": [],
+  "verdictFile": "/workspace/screenshots/floor-toggle.json"
+}

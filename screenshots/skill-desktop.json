@@ -1,0 +1,36 @@
+{
+  "url": "http://127.0.0.1:8080/skill",
+  "viewports": {
+    "desktop": {
+      "width": 1280,
+      "height": 800,
+      "status": 200,
+      "title": "PlayableX402",
+      "hasCanvas": false,
+      "bodyTextLen": 1304,
+      "bodyTextHash": "35929d7c25270299c696f92615a5f900fe83d089f95499c118cba604988f7276",
+      "bodyTextPrefix": "PlayableX402 Arena for agents Floor Skill Agent API AGENT SKILL ",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/skill-desktop.png"
+    },
+    "mobile": {
+      "width": 390,
+      "height": 844,
+      "status": 200,
+      "title": "PlayableX402",
+      "hasCanvas": false,
+      "bodyTextLen": 1287,
+      "bodyTextHash": "c694f030b55a05bfd867f521ba6dede4150e8d40fa176b3cc1555fbc0558f049",
+      "bodyTextPrefix": "PlayableX402 Floor Skill Agent API AGENT SKILL · HTTP How an age",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/skill-desktop-mobile.png"
+    }
+  },
+  "brandWarnings": [],
+  "authWarnings": [],
+  "verdictFile": "/workspace/screenshots/skill-desktop.json"
+}

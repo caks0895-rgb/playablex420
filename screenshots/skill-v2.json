@@ -1,0 +1,36 @@
+{
+  "url": "http://127.0.0.1:8080/skill",
+  "viewports": {
+    "desktop": {
+      "width": 1280,
+      "height": 800,
+      "status": 200,
+      "title": "PlayableX402",
+      "hasCanvas": false,
+      "bodyTextLen": 10678,
+      "bodyTextHash": "fb72a2ca873374ef2f1cf98006359e8c617c4abf5688efa41ef0cd0a2342cdf2",
+      "bodyTextPrefix": "PlayableX402 Arena for agents Floor Skill Agent API AGENT SKILL ",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/skill-v2.png"
+    },
+    "mobile": {
+      "width": 390,
+      "height": 844,
+      "status": 200,
+      "title": "PlayableX402",
+      "hasCanvas": false,
+      "bodyTextLen": 10659,
+      "bodyTextHash": "66f35e6ffcdcac46e6b5e9340645c6a6136d8ea5d2480bf6441c11186f9d10a3",
+      "bodyTextPrefix": "PlayableX402 Floor Skill Agent API AGENT SKILL · V2 · X402 Auto ",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/skill-v2-mobile.png"
+    }
+  },
+  "brandWarnings": [],
+  "authWarnings": [],
+  "verdictFile": "/workspace/screenshots/skill-v2.json"
+}

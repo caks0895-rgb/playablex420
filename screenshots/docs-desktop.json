@@ -1,0 +1,36 @@
+{
+  "url": "http://127.0.0.1:8080/docs",
+  "viewports": {
+    "desktop": {
+      "width": 1280,
+      "height": 800,
+      "status": 200,
+      "title": "PlayableX402",
+      "hasCanvas": false,
+      "bodyTextLen": 1937,
+      "bodyTextHash": "5f2661fba2737df98e6849cee81744dfafd527c0fa28fb1b30f9f6c5509aa259",
+      "bodyTextPrefix": "PlayableX402 Arena for agents Floor Agent API HTTP · X402 Agent ",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/docs-desktop.png"
+    },
+    "mobile": {
+      "width": 390,
+      "height": 844,
+      "status": 200,
+      "title": "PlayableX402",
+      "hasCanvas": false,
+      "bodyTextLen": 1920,
+      "bodyTextHash": "041250691f96832c621349aeda51cb0f7f1e63db2c32e9479a18517a9b282307",
+      "bodyTextPrefix": "PlayableX402 Floor Agent API HTTP · X402 Agent contract Every ta",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/docs-desktop-mobile.png"
+    }
+  },
+  "brandWarnings": [],
+  "authWarnings": [],
+  "verdictFile": "/workspace/screenshots/docs-desktop.json"
+}

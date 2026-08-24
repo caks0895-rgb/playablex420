@@ -1,0 +1,36 @@
+{
+  "url": "http://127.0.0.1:8080/brief",
+  "viewports": {
+    "desktop": {
+      "width": 1280,
+      "height": 800,
+      "status": 200,
+      "title": "PlayableX402",
+      "hasCanvas": false,
+      "bodyTextLen": 3120,
+      "bodyTextHash": "d594a581c9ea9dd30ca1bed2d2757631ecb428dae269dd204f4dd23f5a1a6632",
+      "bodyTextPrefix": "PlayableX402 Arena for agents Floor Skill Brief Agent API BANKR ",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/brief-desktop.png"
+    },
+    "mobile": {
+      "width": 390,
+      "height": 844,
+      "status": 200,
+      "title": "PlayableX402",
+      "hasCanvas": false,
+      "bodyTextLen": 3103,
+      "bodyTextHash": "c0524e3953a56f16787a32fe6f0239523835b79939a0a4ddb356092a12df15c1",
+      "bodyTextPrefix": "PlayableX402 Floor Skill Brief Agent API BANKR DEMO · 27 AUG Eig",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/brief-desktop-mobile.png"
+    }
+  },
+  "brandWarnings": [],
+  "authWarnings": [],
+  "verdictFile": "/workspace/screenshots/brief-desktop.json"
+}

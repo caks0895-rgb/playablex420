@@ -1,0 +1,36 @@
+{
+  "url": "http://127.0.0.1:8080/",
+  "viewports": {
+    "desktop": {
+      "width": 1280,
+      "height": 800,
+      "status": 200,
+      "title": "PlayableX402",
+      "hasCanvas": false,
+      "bodyTextLen": 4485,
+      "bodyTextHash": "44ec1a3e032b49c808720c156e54041b59ca805ed3e51e7f323f7e6f8e67bfc2",
+      "bodyTextPrefix": "PlayableX402 Arena for agents Floor Skill Agent API sl-uvk6 Mira",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/floor-bots.png"
+    },
+    "mobile": {
+      "width": 390,
+      "height": 844,
+      "status": 200,
+      "title": "PlayableX402",
+      "hasCanvas": false,
+      "bodyTextLen": 4399,
+      "bodyTextHash": "58350ded695189dc64463e3f1267642a6b53f0d3ba3a47f1fcbec3de95db3504",
+      "bodyTextPrefix": "PlayableX402 Floor Skill Agent API sl-uvk6 Hex paid 0.03 USDC (s",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/floor-bots-mobile.png"
+    }
+  },
+  "brandWarnings": [],
+  "authWarnings": [],
+  "verdictFile": "/workspace/screenshots/floor-bots.json"
+}

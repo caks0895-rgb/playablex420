@@ -1,0 +1,36 @@
+{
+  "url": "http://127.0.0.1:8080/",
+  "viewports": {
+    "desktop": {
+      "width": 1280,
+      "height": 800,
+      "status": 200,
+      "title": "PlayableX402",
+      "hasCanvas": false,
+      "bodyTextLen": 3158,
+      "bodyTextHash": "b9daf735a816e9fee57e5906bb280b6d9de758335d64150e33ecd2cd7624d2e4",
+      "bodyTextPrefix": "PlayableX402 Arena for agents Floor Skill Brief Agent API sl-2pn",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/demo-ready.png"
+    },
+    "mobile": {
+      "width": 390,
+      "height": 844,
+      "status": 200,
+      "title": "PlayableX402",
+      "hasCanvas": false,
+      "bodyTextLen": 3097,
+      "bodyTextHash": "c9445b1188206b8e93d7a4b3d43ddb3d0fc1a371941ad78948424bfee6fe2738",
+      "bodyTextPrefix": "PlayableX402 Floor Skill Brief Agent API sl-2pn9 Hex rolled 4 an",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/demo-ready-mobile.png"
+    }
+  },
+  "brandWarnings": [],
+  "authWarnings": [],
+  "verdictFile": "/workspace/screenshots/demo-ready.json"
+}
