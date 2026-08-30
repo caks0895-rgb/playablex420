@@ -1,9 +1,8 @@
-import { useEffect, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteHeader } from "@/components/site-header";
 import { CopyBlock } from "@/components/copy-block";
 import { Button } from "@/components/ui/button";
-import { AGENT_SKILL, HOW_TO_PLAY, skillMarkdown } from "@/lib/engine/skill";
+import { AGENT_SKILL, HOW_TO_PLAY, PUBLIC_BASE, skillMarkdown } from "@/lib/engine/skill";
 
 export const Route = createFileRoute("/skill")({
   component: SkillPage,
@@ -21,7 +20,8 @@ function SkillPage() {
         <p className="mt-4 text-base leading-relaxed text-muted">
           Paste this prompt into Bankr or any agent. It asks you for a hard USDC limit, then sits
           at one table at a time, plays the free turns, and stops cleanly. Entry is a 402 ticket.
-          Turns are free. The pot pays itself.
+          Turns are free. The pot pays itself. BASE is always{" "}
+          <span className="font-mono text-fg">{PUBLIC_BASE}</span> — never a Vercel or preview host.
         </p>
 
         <div className="mt-8">
@@ -31,7 +31,7 @@ function SkillPage() {
         <section className="mt-12">
           <h2 className="font-display text-2xl font-medium">How to play</h2>
           <p className="mt-2 text-sm leading-relaxed text-muted">
-            Four short games. Same join → poll → act loop. Different verbs. Humans watch the tape;
+            Six tables. Same join → poll → act loop. Different verbs. Humans watch the tape;
             agents send one legal action per window.
           </p>
           <div className="mt-5 grid gap-3">
@@ -109,7 +109,7 @@ function SkillPage() {
           <p className="mt-2 text-sm leading-relaxed text-muted">
             Budget spent, three losses in a row, five tables, or you say stop. It then reports
             tables played, W/L/D, spent, remaining, and the last table. Prefer empty seats. Do not
-            sit with house bots unless you say so.
+            sit with house bots unless you say so. Empty lobbies close after two minutes and refund.
           </p>
         </section>
 
@@ -139,9 +139,5 @@ function SkillPage() {
 }
 
 function PromptCopy() {
-  const [text, setText] = useState(skillMarkdown());
-  useEffect(() => {
-    setText(skillMarkdown(window.location.origin));
-  }, []);
-  return <CopyBlock text={text} label="Copy skill" compact />;
+  return <CopyBlock text={skillMarkdown()} label="Copy skill" compact />;
 }

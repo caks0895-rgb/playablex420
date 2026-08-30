@@ -1,11 +1,11 @@
 import { createServerFn } from "@tanstack/react-start";
-import { GAME_IDS, type AgentAction, type GameId } from "./types";
+import { GAME_ID_LIST, GAME_IDS, type AgentAction, type GameId } from "./types";
 
 function asGameId(value: unknown): GameId {
   if (typeof value === "string" && (GAME_IDS as readonly string[]).includes(value)) {
     return value as GameId;
   }
-  throw new Error("Unknown game");
+  throw new Error(`gameId must be one of: ${GAME_ID_LIST}`);
 }
 
 export const getCatalogFn = createServerFn({ method: "GET" }).handler(async () => {
@@ -19,22 +19,26 @@ export const listWalletsFn = createServerFn({ method: "GET" }).handler(async () 
 });
 
 export const listMatchesFn = createServerFn({ method: "GET" }).handler(async () => {
-  const { listMatches, toPublic, recentTape, getHouseBots } = await import("./store.server");
+  const { listMatches, toPublic, recentTape, getHouseBots, listChallenges } = await import("./store.server");
   const matches = await listMatches();
   return {
-    matches: matches.map((m) => toPublic(m)),
+    matches: matches.map((m) => toPublic(m, undefined, { logTail: 3 })),
     tape: await recentTape(18),
     houseBots: await getHouseBots(),
+    challenges: await listChallenges({ status: "open" }),
   };
 });
 
 export const getMatchFn = createServerFn({ method: "GET" })
-  .validator((data: { id: string; agentId?: string }) => data)
+  .validator((data: { id: string; agentId?: string; secret?: string }) => data)
   .handler(async ({ data }) => {
     const { getMatch, toPublic } = await import("./store.server");
+    const { checkSecret } = await import("@/lib/x402/pay.server");
     const match = await getMatch(data.id);
     if (!match) return { match: null as null };
-    return { match: toPublic(match, data.agentId) };
+    const authed =
+      data.agentId && data.secret && checkSecret(data.agentId, data.secret) ? data.agentId : undefined;
+    return { match: toPublic(match, authed) };
   });
 
 export const setHouseBotsFn = createServerFn({ method: "POST" })
@@ -44,6 +48,11 @@ export const setHouseBotsFn = createServerFn({ method: "POST" })
     const houseBots = await setHouseBots(Boolean(data.on));
     return { houseBots };
   });
+
+export const sweepDemoFn = createServerFn({ method: "POST" }).handler(async () => {
+  const { sweepDemo } = await import("./store.server");
+  return sweepDemo();
+});
 
 export const getHouseBotsFn = createServerFn({ method: "GET" }).handler(async () => {
   const { getHouseBots } = await import("./store.server");
@@ -71,14 +80,15 @@ export const createMatchFn = createServerFn({ method: "POST" })
   });
 
 export const joinMatchFn = createServerFn({ method: "POST" })
-  .validator((data: { matchId: string; walletId: string; controller?: "bot" | "human" }) => data)
+  .validator((data: { matchId: string; walletId: string; secret: string }) => data)
   .handler(async ({ data }) => {
     const { joinMatch } = await import("./store.server");
     return joinMatch({
       matchId: data.matchId,
       walletId: data.walletId,
-      paymentHeader: data.walletId,
-      controller: data.controller ?? "human",
+      secret: data.secret,
+      paymentHeader: JSON.stringify({ walletId: data.walletId, secret: data.secret }),
+      controller: "human",
     });
   });
 
@@ -92,14 +102,60 @@ export const addBotsFn = createServerFn({ method: "POST" })
 
 export const submitActionFn = createServerFn({ method: "POST" })
   .validator(
-    (data: { matchId: string; walletId: string; action: AgentAction }) => data,
+    (data: { matchId: string; walletId: string; secret: string; action: AgentAction }) => data,
   )
   .handler(async ({ data }) => {
     const { submitAction } = await import("./store.server");
     return submitAction({
       matchId: data.matchId,
       walletId: data.walletId,
-      paymentHeader: data.walletId,
+      secret: data.secret,
+      paymentHeader: JSON.stringify({ walletId: data.walletId, secret: data.secret }),
       action: data.action,
     });
+  });
+
+export const createChallengeFn = createServerFn({ method: "POST" })
+  .validator(
+    (data: {
+      gameId: string;
+      entryFee: number;
+      minPlayers?: number;
+      maxPlayers?: number;
+      minToStart?: number;
+      lobbyTimeoutMs?: number;
+      customConfig?: { topic?: string; judgingRubric?: string; timePerRound?: number };
+      walletId?: string;
+      secret?: string;
+    }) => data,
+  )
+  .handler(async ({ data }) => {
+    const { createChallenge } = await import("./store.server");
+    const paymentHeader =
+      data.walletId && data.secret
+        ? JSON.stringify({ walletId: data.walletId, secret: data.secret })
+        : data.walletId;
+    return createChallenge({
+      gameId: asGameId(data.gameId),
+      entryFee: data.entryFee,
+      minPlayers: data.minPlayers,
+      maxPlayers: data.maxPlayers,
+      minToStart: data.minToStart,
+      lobbyTimeoutMs: data.lobbyTimeoutMs,
+      customConfig: data.customConfig,
+      walletId: data.walletId,
+      paymentHeader,
+    });
+  });
+
+export const listChallengesFn = createServerFn({ method: "GET" }).handler(async () => {
+  const { listChallenges } = await import("./store.server");
+  return { challenges: await listChallenges({ status: "open" }) };
+});
+
+export const startChallengeFn = createServerFn({ method: "POST" })
+  .validator((data: { matchId: string; walletId?: string; secret?: string }) => data)
+  .handler(async ({ data }) => {
+    const { startChallenge } = await import("./store.server");
+    return startChallenge(data);
   });

@@ -1,0 +1,58 @@
+Objective: Perform refactoring and bug fixes based on autonomous testing results, and implement the new "Challenge Floor" (Custom Open Arena) feature on the x402 agent game platform.
+
+---
+
+PART 1: BUG FIXES AND ENGINE STABILITY
+
+1. Input Validation Fixes (Prevent HTTP 500)
+- POST /api/v1/wallets endpoint: Handle empty ("") or null `name` inputs using strict schema validation. Return an HTTP 400 Bad Request response with a clear JSON error message instead of a 500 error.
+- POST /api/v1/matches endpoint: If the submitted `gameId` is not listed in the catalog, return an HTTP 400 Bad Request with a list of valid `gameId`s.
+- GET /api/v1/wallets/{id} endpoint: Ensure numeric balance calculations never result in `NaN`. Fall back to 0 if the balance value is undefined.
+
+2. XSS Security Sanitization for Player Names
+- Sanitize and apply HTML entity encoding to player `name`/`displayName` fields before database storage and rendering to live match logs/tapes to prevent potential script injection.
+
+3. State Synchronization and Action Deduplication (`legalActions`)
+- In Snakes & Ladders, clean the `legalActions` array using deduplication (Set) to avoid returning duplicate tokens like `["roll", "roll", "roll"]`.
+- In RPS++, immediately clear `legalActions` after a player submits a "throw" action during an active round to prevent the agent from receiving a false "scout" status that triggers an "Already thrown this round" error.
+
+4. Turn Deadline and Auto-Roll Mechanism Adjustments
+- Extend the default `turnDeadline` for board games (such as Snakes) to a minimum of 10–15 seconds per turn to accommodate agent HTTP polling latency.
+- Provide a Server-Sent Events (SSE) endpoint at `GET /api/v1/matches/{id}/events` or a WebSocket connection so agents can receive turn signals in real-time without polling delays. ---
+
+PART 2: NEW FEATURE - CHALLENGE FLOOR SYSTEM
+
+1. Custom Challenge Creation Endpoint
+Create a POST /api/v1/challenges endpoint with the following payload schema:
+- gameId (string, required): rps, snakes, debate, coinpump, chess, or poker
+- entryFee (number / micro-units, required): entry ticket amount (e.g., 100000 = 0.10 USDC)
+- minPlayers (number, default: 2): minimum number of players to start the match
+- maxPlayers (number, required): maximum table capacity
+- minToStart (number, optional): player threshold to force-start the match if the lobby is not yet full
+- lobbyTimeoutMs (number, default: 300000 / 5 minutes): waiting period for challengers before funds are returned
+- customConfig (object, optional):
+* For debate games: topic (custom debate topic), judgingRubric (scoring focus: logic, data, or persuasion), timePerRound (turn duration). 
+* For tournament games: turnLimit, suddenDeath.
+
+2. Escrow, Force-Start, and Automatic Refund Mechanisms
+- When the creator creates a challenge, the entryFee is immediately deducted and locked into the match escrow balance.
+- Provide a POST /api/v1/challenges/{id}/start endpoint: The creator can trigger an early start if the number of joined players has reached minToStart.
+- Implement a cron job / automatic timer: If the waiting time (lobbyTimeoutMs) expires and there are fewer than minToStart players, change the match status to "cancelled/expired" and refund 100% of the deposited funds to each participant's wallet. 3. Multi-Judge System for Custom Debates
+- For open-topic debates, implement a consensus-based judging system that evaluates arguments based on three weighted criteria:
+* Argument logic and evidence (40% weight)
+* Relevance to the topic and opponent rebuttals (40% weight)
+* Rhetorical structure and clarity (20% weight)
+- Return detailed judge scores in a transparent JSON format within the match logs once the match status is "finished".
+
+4. Challenge Discovery Feed
+- Create a `GET /api/v1/challenges?status=open` endpoint with query filters: `gameId`, `minFee`, `maxFee`, and `topicKeyword`.
+- Include summary data: `id`, `gameId`, `creator`, `entryFee`, `totalPot`, `currentPlayers`, `maxPlayers`, `minToStart`, `expiresAt`, and `customConfig`.
+- `POST /api/v1/challenges/{id}/join` endpoint: A dedicated endpoint for challengers to accept a challenge and immediately join the match table.
+
+5. Agent Skill Manifest Update
+- Update `/skill.json`, `/.well-known/skill.json`, and `/openapi.json` by adding the following tool schemas:
+* `create_challenge`
+* `list_open_challenges`
+* `accept_challenge`
+* `force_start_challenge`
+- Provide documentation on payload examples and instruction loops so that autonomous LLM agents can directly read and participate in the Challenge Floor without manual intervention.

@@ -30,6 +30,58 @@ function hasGlobbedMigrations(root: string): boolean {
  * migrations — no schema to apply — skips it entirely rather than paying for a
  * PGLite instance it never queries.
  */
+function discoveryPlugin(): Plugin {
+  const PATHS = new Set([
+    "/skill.json",
+    "/.well-known/skill.json",
+    "/.well-known/agent.json",
+    "/openapi.json",
+  ]);
+  const CORS = {
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Headers": "Content-Type, X-PAYMENT, PAYMENT-SIGNATURE, Authorization",
+    "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+    "Cache-Control": "no-store",
+  };
+  return {
+    name: "playablex402-discovery",
+    apply: "serve",
+    configureServer(server) {
+      server.middlewares.use(async (req, res, next) => {
+        const pathOnly = (req.url ?? "").split("?", 1)[0] ?? "";
+        if (!PATHS.has(pathOnly)) {
+          next();
+          return;
+        }
+        const method = (req.method ?? "GET").toUpperCase();
+        if (method === "OPTIONS") {
+          res.statusCode = 204;
+          for (const [k, v] of Object.entries(CORS)) res.setHeader(k, v);
+          res.end();
+          return;
+        }
+        if (method !== "GET") {
+          next();
+          return;
+        }
+        try {
+          const mod = (await server.ssrLoadModule("/src/lib/engine/discovery.ts")) as {
+            skillDiscovery: () => unknown;
+            openApiSpec: () => unknown;
+          };
+          const data = pathOnly.endsWith("openapi.json") ? mod.openApiSpec() : mod.skillDiscovery();
+          res.statusCode = 200;
+          res.setHeader("content-type", "application/json; charset=utf-8");
+          for (const [k, v] of Object.entries(CORS)) res.setHeader(k, v);
+          res.end(JSON.stringify(data));
+        } catch (err) {
+          next(err);
+        }
+      });
+    },
+  };
+}
+
 function pgliteBootstrapPlugin(): Plugin {
   return {
     name: "app-builder:pglite-bootstrap",
@@ -159,6 +211,7 @@ export default defineConfig(({ command, isPreview }) => ({
   resolve: { tsconfigPaths: true },
   plugins: [
     pgliteBootstrapPlugin(),
+    discoveryPlugin(),
     // Before tanstackStart so /auth/popup never falls through to the SPA.
     authPopupPlugin(),
     // Dev-only /__app-env, read by scripts/check-auth-invariant.mjs.

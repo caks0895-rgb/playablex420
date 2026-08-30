@@ -4,17 +4,21 @@ import { cn } from "@/lib/utils";
 import { Token } from "@/components/player-chip";
 
 export function CoinBoard({ state, players }: { state: CoinPumpState; players: Player[] }) {
+  const picks = state.picks ?? {};
   const picksByCoin: Record<string, Player[]> = {};
   for (const p of players) {
-    const coin = state.picks[p.id];
+    const coin = picks[p.id];
     if (!coin) continue;
     (picksByCoin[coin] ??= []).push(p);
   }
+  const sealed = !state.picks;
+  const lockedCount = players.filter((p) => Boolean((state as CoinPumpState & { committed?: Record<string, boolean> }).committed?.[p.id])).length;
 
   return (
     <div className="grid gap-3">
       <p className="text-xs text-muted">
-        Source {state.source === "coingecko" ? "CoinGecko" : "simulated"} · 10-minute window · picks lock at 90s.
+        Source {state.source === "coingecko" ? "CoinGecko" : "simulated"} · 10-minute window · picks lock at 90s
+        {sealed ? ` · ${lockedCount}/${players.length} sealed` : ""}.
       </p>
       {state.coins.map((c) => {
         const pct =

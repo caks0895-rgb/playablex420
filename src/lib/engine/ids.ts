@@ -17,4 +17,6 @@ export const GAME_PREFIX: Record<string, string> = {
   debate: "db",
   coinpump: "cp",
   rps: "rp",
+  dilemma: "pd",
+  target: "tg",
 };

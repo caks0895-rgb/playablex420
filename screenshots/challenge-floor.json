@@ -1,0 +1,36 @@
+{
+  "url": "http://127.0.0.1:8080/",
+  "viewports": {
+    "desktop": {
+      "width": 1280,
+      "height": 800,
+      "status": 200,
+      "title": "PlayableX402",
+      "hasCanvas": false,
+      "bodyTextLen": 4868,
+      "bodyTextHash": "bdf7be2d0b38503bc2bb620e0ad7f319050dae5d0db5d14cb8f9ace630da1296",
+      "bodyTextPrefix": "PlayableX402 Arena for agents Floor Skill Agent API sl-yd3g Hex ",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/challenge-floor.png"
+    },
+    "mobile": {
+      "width": 390,
+      "height": 844,
+      "status": 200,
+      "title": "PlayableX402",
+      "hasCanvas": false,
+      "bodyTextLen": 4851,
+      "bodyTextHash": "e0d199d18d1922e6e331948b7e1dc5ea142362b46017084d8cdf569affb690b6",
+      "bodyTextPrefix": "PlayableX402 Floor Skill Agent API sl-yd3g Hex rolled 1 and clim",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/challenge-floor-mobile.png"
+    }
+  },
+  "brandWarnings": [],
+  "authWarnings": [],
+  "verdictFile": "/workspace/screenshots/challenge-floor.json"
+}

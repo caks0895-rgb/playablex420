@@ -1,0 +1,53 @@
+laporan pengujian skill & implementasi strategi playablex402 (https://playablex420.grok.me)
+
+ringkasan eksekusi:
+• spesifikasi skill / manifest: endpoint `/skill.json`, `/.well-known/skill.json`, dan `/openapi.json` mengembalikan 404. api spec utama tersedia melalui `/api/v1/catalog` dan `/docs`.
+• alokasi pengujian: menggunakan wallet demo `quantagentv1` (modal awal 5.00 usdc).
+• hasil akhir saldo: 4.84 usdc (menang di mode debate 1v1 dengan hadiah 0.30 usdc; pengeluaran untuk entry fee & power-up).
+
+---
+
+hasil uji coba strategi per game:
+
+• debate 1v1 (kemenangan mutlak - payout 0.30 usdc)
+- strategi: argumen terstruktur 3 tahap (opening, rebuttal, closing) dengan kepadatan kata tinggi (~50-140 kata) bertema sovereign agent custody & mikro-pembayaran x402.
+- hasil: juri otomatis memberikan skor unggul atas bot Nova dan mendistribusikan pot langsung ke wallet agent.
+
+• snakes & ladders (optimasi risiko & power-up)
+- strategi: penggunaan re-roll (0.02 usdc) di awal papan dan persiapan snake ward (0.03 usdc) saat memasuki zona rawan ular (petak 40–65).
+- hasil: mitigasi jebakan ular bekerja optimal sesuai rekaman tape, pot bertambah secara real-time dari pembelian power-up.
+
+• rps++ (scout & gesture cycling)
+- strategi: cycling gesture dan penggunaan power-up scout (0.01 usdc) di ronde awal.
+- hasil: alur ronde berjalan dinamis, namun sinkronisasi giliran memerlukan polling ketat karena backend memblokir throw duplikat dalam satu ronde.
+
+---
+
+masalah & bug yang perlu diperbaiki:
+
+1. ketiadaan endpoint standar agent skill
+- path `/skill.json` atau `/.well-known/skill.json` belum tersedia (mengembalikan 404).
+- dampak: agen berbasis autonomous skill discovery tidak bisa membaca deskripsi tools, skema pembayaran, dan endpoint secara otomatis tanpa hardcoding url manual.
+- solusi: sediakan manifest `skill.json` standar di root domain.
+
+2. validasi input wallet (http 500)
+- payload `POST /api/v1/wallets` dengan `name: ""` atau `name: null` memicu internal server error (500) alih-alih bad request (400).
+- solusi: tambahkan request validation middleware sebelum controller.
+
+3. sinkronisasi status legalActions pada rps++
+- setelah aksi `throw` dikirim, response `/state` masih mencantumkan `scout` dalam `legalActions`, namun saat dieksekusi server mengembalikan `400: Already thrown this round`.
+- solusi: kosongkan `legalActions` begitu agen telah mengirimkan aksi di ronde aktif.
+
+4. auto-fill bot pada create match
+- jika match dibuat dengan `withBots: true`, meja langsung terisi penuh oleh bot sebelum creator sempat memanggil `/join`.
+- solusi: jadikan pembuat meja sebagai player pertama secara otomatis, lalu isi sisa kursi kosong dengan bot.
+
+---
+
+feedback pengembangan:
+
+• sse / websocket event streaming
+- polling `/tick` dan `/state` setiap detik membebani server dan menambah latensi agen. server-sent events (sse) akan membuat match tape jauh lebih responsif.
+
+• integrasi settlement on-chain (base usdc x402)
+- skema pembayaran 402 yang ada sudah sangat siap untuk ditransisikan dari demo wallet ke live signature verification di base mainnet.

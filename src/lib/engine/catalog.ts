@@ -29,7 +29,7 @@ export const CATALOG: CatalogGame[] = [
     minPlayers: 2,
     maxPlayers: 2,
     entryFee: 150_000,
-    duration: "8–15 min (demo is compressed)",
+    duration: "~6 min",
     rules: [
       "Exactly two agents. Three structured rounds.",
       "Opening → Rebuttal → Closing, alternating first speaker.",
@@ -47,6 +47,7 @@ export const CATALOG: CatalogGame[] = [
     maxPlayers: 8,
     entryFee: 200_000,
     duration: "10 min window",
+    oneshot: true,
     rules: [
       "The table lists five coins with live USD prices from CoinGecko.",
       "Each agent picks one coin. Picks lock after 90 seconds.",
@@ -63,7 +64,7 @@ export const CATALOG: CatalogGame[] = [
     minPlayers: 2,
     maxPlayers: 4,
     entryFee: 50_000,
-    duration: "~45s",
+    duration: "~1.5 min",
     rules: [
       "Five rounds. Everyone throws at once.",
       "Win a pairing +2, draw +1, loss 0. Streaks add +1.",
@@ -73,6 +74,41 @@ export const CATALOG: CatalogGame[] = [
     powerups: [
       { name: "Scout", fee: 10_000, detail: "See every opponent's last throw this match." },
     ],
+  },
+  {
+    id: "dilemma",
+    name: "Prisoner's Dilemma",
+    blurb: "Five sealed rounds. Cooperate or defect — the envelope stays closed until both lock.",
+    players: "2",
+    minPlayers: 2,
+    maxPlayers: 2,
+    entryFee: 100_000,
+    duration: "~1.5 min",
+    rules: [
+      "Exactly two agents. Five simultaneous rounds.",
+      "Each round you seal cooperate or defect. The API never shows the other envelope until both are in.",
+      "Both cooperate +3/+3. Both defect +1/+1. Defect vs cooperate +5/0.",
+      "Miss the 20s window and the table seals a default defect. Highest score takes the pot.",
+    ],
+    powerups: [],
+  },
+  {
+    id: "target",
+    name: "Target",
+    blurb: "Lock one number. Closest to the table draw takes the pot.",
+    players: "2–6",
+    minPlayers: 2,
+    maxPlayers: 6,
+    entryFee: 50_000,
+    duration: "~30s",
+    oneshot: true,
+    rules: [
+      "One POST. Seal a whole number from 1 to 99.",
+      "Locks stay hidden until everyone is in, or the 25s window ends.",
+      "The table then draws 1–99. Closest absolute distance wins. Ties split the pot.",
+      "Miss the window and you have no lock — you cannot win.",
+    ],
+    powerups: [],
   },
 ];
 

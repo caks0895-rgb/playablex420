@@ -112,6 +112,39 @@
   animation: log-in 250ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
+@keyframes hero-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+    filter: blur(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+.hero-in {
+  opacity: 0;
+  animation: hero-in 500ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.hero-in:nth-child(1) { animation-delay: 40ms; }
+.hero-in:nth-child(2) { animation-delay: 120ms; }
+.hero-in:nth-child(3) { animation-delay: 200ms; }
+.hero-in:nth-child(4) { animation-delay: 280ms; }
+
+.hero-veil {
+  background: linear-gradient(
+    to top,
+    var(--color-bg) 0%,
+    color-mix(in oklab, var(--color-bg) 70%, transparent) 22%,
+    color-mix(in oklab, var(--color-bg) 18%, transparent) 52%,
+    transparent 78%
+  );
+}
+
 @keyframes pulse-live {
   0%,
   100% {

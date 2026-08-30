@@ -1,5 +1,6 @@
 import { getSql } from "@/lib/db";
 import type { LedgerEntry, Match, Wallet } from "./types";
+import { safeBalance } from "./types";
 
 interface WalletRow {
   id: string;
@@ -63,7 +64,7 @@ export async function loadAll(): Promise<{
     wallets: walletRows.map((r) => ({
       id: r.id,
       name: r.name,
-      balance: Number(r.balance),
+      balance: safeBalance(r.balance),
       createdAt: Number(r.created_at),
     })),
     matches: matchRows.map((r) => asMatch(r.payload)),
@@ -81,13 +82,71 @@ export async function loadAll(): Promise<{
   };
 }
 
+export async function loadMatch(id: string): Promise<Match | undefined> {
+  const sql = await getSql();
+  const rows = await sql<MatchRow>`
+    select id, payload from matches where id = ${id} limit 1
+  `;
+  const row = rows[0];
+  return row ? asMatch(row.payload) : undefined;
+}
+
+export async function loadMatches(): Promise<Match[]> {
+  const sql = await getSql();
+  const rows = await sql<MatchRow>`
+    select id, payload from matches order by created_at desc limit 80
+  `;
+  return rows.map((r) => asMatch(r.payload));
+}
+
+export async function loadWallet(id: string): Promise<Wallet | undefined> {
+  const sql = await getSql();
+  const rows = await sql<WalletRow>`
+    select id, name, balance, created_at from wallets where id = ${id} limit 1
+  `;
+  const r = rows[0];
+  if (!r) return undefined;
+  return {
+    id: r.id,
+    name: r.name,
+    balance: safeBalance(r.balance),
+    createdAt: Number(r.created_at),
+  };
+}
+
+export async function loadWallets(): Promise<Wallet[]> {
+  const sql = await getSql();
+  const rows = await sql<WalletRow>`
+    select id, name, balance, created_at from wallets order by name
+  `;
+  return rows.map((r) => ({
+    id: r.id,
+    name: r.name,
+    balance: safeBalance(r.balance),
+    createdAt: Number(r.created_at),
+  }));
+}
+
 export async function saveHouseBots(on: boolean): Promise<void> {
+  await saveMeta("house_bots", on ? "1" : "0");
+}
+
+export async function loadMeta(key: string): Promise<string | undefined> {
+  const sql = await getSql();
+  await ensureMeta(sql);
+  const rows = await sql<{ value: string }>`
+    select value from meta where key = ${key} limit 1
+  `;
+  return rows[0]?.value;
+}
+
+export async function saveMeta(key: string, value: string): Promise<void> {
   const sql = await getSql();
   await ensureMeta(sql);
   await sql.query(
-    `insert into meta (key, value) values ('house_bots', $1)
+    `insert into meta (key, value) values ($1, $2)
      on conflict (key) do update set value = excluded.value`,
-    [on ? "1" : "0"],
+    [key, value],
   );
 }
 
@@ -130,4 +189,9 @@ export async function saveLedger(entry: LedgerEntry): Promise<void> {
 export async function deleteMatch(id: string): Promise<void> {
   const sql = await getSql();
   await sql.query(`delete from matches where id = $1`, [id]);
+}
+
+export async function deleteWallet(id: string): Promise<void> {
+  const sql = await getSql();
+  await sql.query(`delete from wallets where id = $1`, [id]);
 }

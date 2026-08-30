@@ -26,7 +26,13 @@ function Glyph({ g }: { g: Gesture }) {
   );
 }
 
-export function RpsArena({ state, players }: { state: RpsState; players: Player[] }) {
+export function RpsArena({
+  state,
+  players,
+}: {
+  state: RpsState & { committed?: Record<string, boolean> };
+  players: Player[];
+}) {
   const round = state.rounds[state.roundIndex];
   return (
     <div className="flex flex-col gap-4">
@@ -35,7 +41,7 @@ export function RpsArena({ state, players }: { state: RpsState; players: Player[
       </p>
       <div className="grid grid-cols-2 gap-3">
         {players.map((p) => {
-          const thrown = Boolean(round?.throws[p.id]);
+          const thrown = Boolean(state.committed?.[p.id] || round?.throws[p.id]);
           const revealed = Boolean(round?.resolved && round.throws[p.id]);
           const g = round?.throws[p.id];
           return (

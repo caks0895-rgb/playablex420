@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as DocsRouteImport } from './routes/docs'
+import { Route as FloorRouteImport } from './routes/floor'
 import { Route as OpenapiDotjsonRouteImport } from './routes/openapi[.]json'
 import { Route as SkillRouteImport } from './routes/skill'
 import { Route as SkillDotjsonRouteImport } from './routes/skill[.]json'
@@ -27,6 +28,11 @@ const IndexRoute = IndexRouteImport.update({
 const DocsRoute = DocsRouteImport.update({
   id: '/docs',
   path: '/docs',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FloorRoute = FloorRouteImport.update({
+  id: '/floor',
+  path: '/floor',
   getParentRoute: () => rootRouteImport,
 } as any)
 const OpenapiDotjsonRoute = OpenapiDotjsonRouteImport.update({
@@ -69,6 +75,7 @@ const ApiV1SplatRoute = ApiV1SplatRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/docs': typeof DocsRoute
+  '/floor': typeof FloorRoute
   '/openapi.json': typeof OpenapiDotjsonRoute
   '/skill': typeof SkillRoute
   '/skill.json': typeof SkillDotjsonRoute
@@ -80,6 +87,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/docs': typeof DocsRoute
+  '/floor': typeof FloorRoute
   '/openapi.json': typeof OpenapiDotjsonRoute
   '/skill': typeof SkillRoute
   '/skill.json': typeof SkillDotjsonRoute
@@ -92,6 +100,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/docs': typeof DocsRoute
+  '/floor': typeof FloorRoute
   '/openapi.json': typeof OpenapiDotjsonRoute
   '/skill': typeof SkillRoute
   '/skill.json': typeof SkillDotjsonRoute
@@ -105,6 +114,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/docs'
+    | '/floor'
     | '/openapi.json'
     | '/skill'
     | '/skill.json'
@@ -116,6 +126,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/docs'
+    | '/floor'
     | '/openapi.json'
     | '/skill'
     | '/skill.json'
@@ -127,6 +138,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/docs'
+    | '/floor'
     | '/openapi.json'
     | '/skill'
     | '/skill.json'
@@ -139,6 +151,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   DocsRoute: typeof DocsRoute
+  FloorRoute: typeof FloorRoute
   OpenapiDotjsonRoute: typeof OpenapiDotjsonRoute
   SkillRoute: typeof SkillRoute
   SkillDotjsonRoute: typeof SkillDotjsonRoute
@@ -162,6 +175,13 @@ declare module '@tanstack/react-router' {
       path: '/docs'
       fullPath: '/docs'
       preLoaderRoute: typeof DocsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/floor': {
+      id: '/floor'
+      path: '/floor'
+      fullPath: '/floor'
+      preLoaderRoute: typeof FloorRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/openapi.json': {
@@ -219,6 +239,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   DocsRoute: DocsRoute,
+  FloorRoute: FloorRoute,
   OpenapiDotjsonRoute: OpenapiDotjsonRoute,
   SkillRoute: SkillRoute,
   SkillDotjsonRoute: SkillDotjsonRoute,

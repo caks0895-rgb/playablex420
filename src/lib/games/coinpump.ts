@@ -49,6 +49,29 @@ export function createCoinPumpState(now: number, quotes: CoinQuote[], source: Co
   };
 }
 
+export function publicCoinPumpState(state: CoinPumpState): {
+  coins: CoinQuote[];
+  windowEndsAt: number;
+  lockAt: number;
+  resolved: boolean;
+  source: CoinPumpState["source"];
+  committed: Record<string, boolean>;
+  picks?: Record<string, string>;
+} {
+  const committed: Record<string, boolean> = {};
+  for (const id of Object.keys(state.picks ?? {})) committed[id] = true;
+  const locked = state.resolved || Date.now() >= state.lockAt;
+  return {
+    coins: state.coins,
+    windowEndsAt: state.windowEndsAt,
+    lockAt: state.lockAt,
+    resolved: state.resolved,
+    source: state.source,
+    committed,
+    picks: locked ? { ...state.picks } : undefined,
+  };
+}
+
 export function coinPumpLegal(match: Match, playerId: string): LegalAction[] {
   if (match.status !== "playing") return [];
   const state = match.state as CoinPumpState;
@@ -89,7 +112,7 @@ export async function fetchQuotes(): Promise<{ quotes: CoinQuote[]; source: Coin
   try {
     const res = await fetch(
       `https://api.coingecko.com/api/v3/simple/price?ids=${ids}&vs_currencies=usd`,
-      { headers: { accept: "application/json" } },
+      { headers: { accept: "application/json" }, signal: AbortSignal.timeout(4000) },
     );
     if (!res.ok) throw new Error(String(res.status));
     const json = (await res.json()) as Record<string, { usd?: number }>;

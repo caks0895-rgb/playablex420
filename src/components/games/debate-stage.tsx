@@ -61,6 +61,25 @@ export function DebateStage({ state, players }: { state: DebateState; players: P
           {state.verdict}
         </p>
       )}
+      {state.panel && (
+        <div className="rounded-[16px] border border-border bg-surface px-4 py-3">
+          <p className="text-xs uppercase tracking-[0.14em] text-faint">Panel · logic 40 · relevance 40 · rhetoric 20</p>
+          <ul className="mt-2 flex flex-col gap-1 font-mono text-xs text-muted">
+            {state.panel.judges.map((j) => (
+              <li key={j.name}>
+                {j.name}:{" "}
+                {players
+                  .map((p) => {
+                    const s = j.scores[p.id];
+                    return s ? `${p.name} ${s.total}` : null;
+                  })
+                  .filter(Boolean)
+                  .join(" · ")}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
       {state.judging && <p className="text-sm text-warn">Judge is scoring the floor.</p>}
       {seat && byId[seat.playerId] && !state.judging && (
         <p className="text-sm text-muted">

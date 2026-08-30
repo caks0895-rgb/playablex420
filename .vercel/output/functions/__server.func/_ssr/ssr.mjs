@@ -88,7 +88,7 @@ var HEADERS = { TSS_SHELL: "X-TSS_SHELL" };
 * the dev styles URL for route-scoped CSS collection.
 */
 async function getStartManifest(matchedRoutes) {
-	const { tsrStartManifest } = await import("../_tanstack-start-manifest_v-Dqg1DI02.mjs");
+	const { tsrStartManifest } = await import("../_tanstack-start-manifest_v-_cGEOT_t.mjs");
 	const startManifest = tsrStartManifest();
 	let routes = startManifest.routes;
 	routes[rootRouteId];
@@ -110,39 +110,63 @@ async function getStartManifest(matchedRoutes) {
 var manifest = {
 	"0e84655ebcf6689b412e96f191f7921420830efb4d551d6b41a48fe3b4fbdf86": {
 		functionName: "addBotsFn_createServerFn_handler",
-		importer: () => import("./functions-CV7eALvj.mjs")
+		importer: () => import("./functions-C4ilKhDW.mjs")
+	},
+	"2038fd7f9fb67b161a85e54e291bfa4bed23a2c28efe8133d30cf0608592a85b": {
+		functionName: "createChallengeFn_createServerFn_handler",
+		importer: () => import("./functions-C4ilKhDW.mjs")
 	},
 	"2e76225859200c4fa11f8e415a3b6eb63d19ac1b50b6ea06e01547a2a25d5a05": {
 		functionName: "createWalletFn_createServerFn_handler",
-		importer: () => import("./functions-CV7eALvj.mjs")
+		importer: () => import("./functions-C4ilKhDW.mjs")
 	},
 	"385a48debc614140844a001a725a98529d499d0316f8ccfd05448f7a53e1f3bb": {
 		functionName: "submitActionFn_createServerFn_handler",
-		importer: () => import("./functions-CV7eALvj.mjs")
+		importer: () => import("./functions-C4ilKhDW.mjs")
 	},
 	"3d4f2f1f7b1be14a31fae4c1f1024b9e0d6fbc07ad59304a056fc00cdb8c104f": {
 		functionName: "listMatchesFn_createServerFn_handler",
-		importer: () => import("./functions-CV7eALvj.mjs")
+		importer: () => import("./functions-C4ilKhDW.mjs")
 	},
 	"7db1e2e0321452800e3ad50ccd12bc7f37e6a4ad5b4d67934e288814d44a23f3": {
 		functionName: "getCatalogFn_createServerFn_handler",
-		importer: () => import("./functions-CV7eALvj.mjs")
+		importer: () => import("./functions-C4ilKhDW.mjs")
+	},
+	"7e62bb7e60b8b04912325ad724f5c455bdffaaf567ad3217be2508f45e648a95": {
+		functionName: "setHouseBotsFn_createServerFn_handler",
+		importer: () => import("./functions-C4ilKhDW.mjs")
+	},
+	"83d969aa2cca2b2fb289a4b7dd35e0ef29bb5f02674fbd0a7c17ad1248aaac37": {
+		functionName: "listChallengesFn_createServerFn_handler",
+		importer: () => import("./functions-C4ilKhDW.mjs")
 	},
 	"8a56fa9c3fe6405506fd7856a81623569ba4a2c38de214c02f433713ad66276f": {
 		functionName: "joinMatchFn_createServerFn_handler",
-		importer: () => import("./functions-CV7eALvj.mjs")
+		importer: () => import("./functions-C4ilKhDW.mjs")
 	},
 	"8c20703b98b79424f4888350ce093ba04e5195c153d10f2e8f2a5c468cad9c40": {
 		functionName: "createMatchFn_createServerFn_handler",
-		importer: () => import("./functions-CV7eALvj.mjs")
+		importer: () => import("./functions-C4ilKhDW.mjs")
+	},
+	"9a99b2bdd2cf82014802f65c41c06bae2e465815b9d2bcb35c5cc9740bc59075": {
+		functionName: "getHouseBotsFn_createServerFn_handler",
+		importer: () => import("./functions-C4ilKhDW.mjs")
 	},
 	"9fccfa64ea97798038002e7b67faf1409a917547275d2e85ced97c1d91574aa1": {
 		functionName: "listWalletsFn_createServerFn_handler",
-		importer: () => import("./functions-CV7eALvj.mjs")
+		importer: () => import("./functions-C4ilKhDW.mjs")
+	},
+	"c63d50882d5c14bcf4293177566b0719b5000b06a46aebb1d3248788e57212da": {
+		functionName: "startChallengeFn_createServerFn_handler",
+		importer: () => import("./functions-C4ilKhDW.mjs")
 	},
 	"dc78b970d796056847a2e946134342110168fcb2e76717c78888d688a62bb2b0": {
 		functionName: "getMatchFn_createServerFn_handler",
-		importer: () => import("./functions-CV7eALvj.mjs")
+		importer: () => import("./functions-C4ilKhDW.mjs")
+	},
+	"f45f7363946a7217acfbd598a9563de0a6c000bfa1fd0b7b60d886b43cbfc9f5": {
+		functionName: "sweepDemoFn_createServerFn_handler",
+		importer: () => import("./functions-C4ilKhDW.mjs")
 	}
 };
 async function getServerFnById(id, access) {
@@ -1412,7 +1436,7 @@ var getBaseManifest = getProdBaseManifest;
 var createEarlyHintsForRequest = createEarlyHintsCollector;
 async function loadEntries() {
 	const [routerEntry, startEntry, pluginAdapters] = await Promise.all([
-		import("./router-HsLigWy_.mjs").then((n) => n.t),
+		import("./router-Dm11Mey3.mjs").then((n) => n.t),
 		import("./start-5Z2QO8AU.mjs"),
 		import("./empty-plugin-adapters-D9UWiqvJ.mjs")
 	]);

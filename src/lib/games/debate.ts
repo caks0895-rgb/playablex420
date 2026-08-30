@@ -1,4 +1,4 @@
-import type { LegalAction, Match, Player } from "@/lib/engine/types";
+import type { ChallengeConfig, LegalAction, Match, Player } from "@/lib/engine/types";
 
 export const TOPICS = [
   "Should AI agents be allowed to hold their own wallets without a human co-signer?",
@@ -23,9 +23,18 @@ export interface DebateState {
   roundIndex: number;
   speeches: DebateSpeech[];
   windowEndsAt: number;
-  scores?: Record<string, { total: number; notes: string }>;
+  scores?: Record<string, { total: number; notes: string; logic?: number; relevance?: number; rhetoric?: number }>;
   verdict?: string;
   judging?: boolean;
+  rubric?: "logic" | "data" | "persuasion" | "balanced";
+  roundMs?: number;
+  panel?: {
+    weights: { logic: number; relevance: number; rhetoric: number };
+    judges: {
+      name: string;
+      scores: Record<string, { logic: number; relevance: number; rhetoric: number; total: number }>;
+    }[];
+  };
 }
 
 export const ROUND_SEQUENCE: DebateRoundKind[] = [
@@ -38,23 +47,40 @@ export const ROUND_SEQUENCE: DebateRoundKind[] = [
 ];
 
 export const ROUND_MS: Record<DebateRoundKind, number> = {
-  opening: 90_000,
-  rebuttal: 75_000,
-  closing: 60_000,
+  opening: 70_000,
+  rebuttal: 55_000,
+  closing: 45_000,
 };
 
-export function createDebateState(players: Player[], now: number): DebateState {
-  const topic = TOPICS[Math.floor(Math.random() * TOPICS.length)]!;
+export function createDebateState(
+  players: Player[],
+  now: number,
+  config?: ChallengeConfig,
+): DebateState {
+  const customTopic = typeof config?.topic === "string" ? config.topic.trim().slice(0, 200) : "";
+  const topic = customTopic || TOPICS[Math.floor(Math.random() * TOPICS.length)]!;
   const order = players.map((p) => p.id);
   if (Math.random() < 0.5) order.reverse();
   const kind = ROUND_SEQUENCE[0]!;
+  const roundMs =
+    typeof config?.timePerRound === "number" && Number.isFinite(config.timePerRound)
+      ? Math.min(180_000, Math.max(15_000, Math.round(config.timePerRound)))
+      : undefined;
+  const window = roundMs ?? ROUND_MS[kind];
+  const rubric = config?.judgingRubric;
   return {
     topic,
     speakerOrder: order,
     roundIndex: 0,
     speeches: [],
-    windowEndsAt: now + ROUND_MS[kind],
+    windowEndsAt: now + window,
+    rubric: rubric === "logic" || rubric === "data" || rubric === "persuasion" ? rubric : "balanced",
+    roundMs,
   };
+}
+
+export function debateWindowMs(state: DebateState, kind: DebateRoundKind): number {
+  return state.roundMs ?? ROUND_MS[kind];
 }
 
 export function currentDebateSeat(state: DebateState): {

@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { cn } from "@/lib/utils";
 
-export function SiteHeader({ active }: { active?: "floor" | "docs" | "skill" }) {
+export function SiteHeader({ active }: { active?: "home" | "floor" | "docs" | "skill" }) {
   return (
     <header className="border-b border-border">
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-4 sm:px-6">
@@ -11,7 +11,7 @@ export function SiteHeader({ active }: { active?: "floor" | "docs" | "skill" }) 
         </Link>
         <nav className="flex items-center gap-1 text-sm">
           <Link
-            to="/"
+            to="/floor"
             className={cn(
               "rounded-[8px] px-3 py-2 transition-colors duration-150",
               active === "floor" ? "bg-raised text-fg" : "text-muted hover:text-fg",

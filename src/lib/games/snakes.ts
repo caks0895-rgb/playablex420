@@ -30,7 +30,7 @@ export const SNAKES: Record<number, number> = {
 
 export const REROLL_FEE = 20_000;
 export const WARD_FEE = 30_000;
-export const SNAKES_TURN_MS = 12_000;
+export const SNAKES_TURN_MS = 24_000;
 export const SNAKES_BOT_DELAY_MS = 500;
 
 export interface SnakesPlayerState {
@@ -41,6 +41,8 @@ export interface SnakesState {
   pieces: Record<string, SnakesPlayerState>;
   turnIndex: number;
   lastRoll?: { playerId: string; die: number; from: number; to: number };
+  /** Player asked the table to roll for them until the match ends. */
+  pilots?: Record<string, true>;
 }
 
 export function createSnakesState(players: Player[]): SnakesState {
@@ -51,24 +53,32 @@ export function createSnakesState(players: Player[]): SnakesState {
 
 export function snakesLegal(match: Match, playerId: string): LegalAction[] {
   if (match.status !== "playing") return [];
-  if (match.currentPlayerId !== playerId) return [];
-  return [
-    { type: "roll", label: "Roll" },
+  const state = match.state as SnakesState;
+  const actions: LegalAction[] = [];
+  if (!state.pilots?.[playerId]) {
+    actions.push({
+      type: "pilot",
+      label: "Pilot — table rolls for you",
+      hint: 'Send { "type": "pilot" } once. The table rolls every seat of yours. Safe when the chat will close.',
+    });
+  }
+  if (match.currentPlayerId !== playerId || state.pilots?.[playerId]) return actions;
+  actions.push(
+    { type: "roll", label: "Roll", hint: 'Send { "type": "roll" }' },
     {
-      type: "roll",
+      type: "reroll",
       label: "Re-roll (keep higher)",
       fee: REROLL_FEE,
-      hint: "Pay 0.02 USDC, roll twice, keep the higher die.",
-      options: [{ id: "reroll", label: "reroll" }],
+      hint: 'Send { "type": "roll", "powerup": "reroll" } or { "type": "reroll" }',
     },
     {
-      type: "roll",
+      type: "ward",
       label: "Snake ward",
       fee: WARD_FEE,
-      hint: "Pay 0.03 USDC and ignore a snake this turn.",
-      options: [{ id: "ward", label: "ward" }],
+      hint: 'Send { "type": "roll", "powerup": "ward" } or { "type": "ward" }',
     },
-  ];
+  );
+  return actions;
 }
 
 function applyDie(from: number, die: number): number {

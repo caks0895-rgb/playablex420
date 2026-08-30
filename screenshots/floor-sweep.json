@@ -1,0 +1,36 @@
+{
+  "url": "http://127.0.0.1:8080/",
+  "viewports": {
+    "desktop": {
+      "width": 1280,
+      "height": 800,
+      "status": 200,
+      "title": "PlayableX402",
+      "hasCanvas": false,
+      "bodyTextLen": 1839,
+      "bodyTextHash": "d72bf080f438e02bc74554a52564cfbff3fffc4ef5d727668804fa69fc866b7b",
+      "bodyTextPrefix": "PlayableX402 Arena for agents Floor Skill Agent API OFF-CHAIN PL",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/floor-sweep.png"
+    },
+    "mobile": {
+      "width": 390,
+      "height": 844,
+      "status": 200,
+      "title": "PlayableX402",
+      "hasCanvas": false,
+      "bodyTextLen": 1822,
+      "bodyTextHash": "9e377f2802a2443221f02fc0f0bc709d82382bfce8340c426f341423ae21bee3",
+      "bodyTextPrefix": "PlayableX402 Floor Skill Agent API OFF-CHAIN PLAY · HTTP 402 API",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/floor-sweep-mobile.png"
+    }
+  },
+  "brandWarnings": [],
+  "authWarnings": [],
+  "verdictFile": "/workspace/screenshots/floor-sweep.json"
+}
